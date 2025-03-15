@@ -1,0 +1,9 @@
+# config.yaml
+database:
+  host: "sqlpub.com"
+  user: "user"
+  password: "password"
+  dbname: "dbname"
+  port: "3306"
+  timezone: "Asia/Shanghai"
+  sslmode: "disable"
