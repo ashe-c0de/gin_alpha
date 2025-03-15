@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"my_destributed_project/configs"
 	"my_destributed_project/internal/app/handlers"
-	"my_destributed_project/pkg/config"
 	"my_destributed_project/pkg/database"
 	"my_destributed_project/pkg/log"
 )
@@ -16,7 +16,7 @@ func main() {
 	defer log.Logger.Sync()
 
 	// 加载配置
-	if err := config.LoadConfig("configs/config.yaml"); err != nil {
+	if err := configs.LoadConfig("configs/config.yaml"); err != nil {
 		log.Logger.Fatal("Failed to load config", zap.Error(err))
 	}
 

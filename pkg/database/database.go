@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"my_destributed_project/pkg/config"
+	"my_destributed_project/configs"
 )
 
 var DB *gorm.DB
 
 // ConnectDatabase 连接数据库
 func ConnectDatabase() error {
-	cfg := config.AppConfig
+	cfg := configs.AppConfig
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Dbname)
