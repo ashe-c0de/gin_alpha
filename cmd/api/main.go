@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"my_destributed_project/configs"
@@ -12,7 +11,7 @@ import (
 
 func main() {
 	// 初始化日志
-	log.InitLogger()
+	log.InitLogger("/logs/app.log")
 	defer log.Logger.Sync()
 
 	// 加载配置
@@ -34,7 +33,7 @@ func main() {
 
 	// 启动服务器
 	port := ":8080"
-	fmt.Println("Server running on", port)
+	log.Logger.Info("Server running on", port)
 	if err := r.Run(port); err != nil {
 		log.Logger.Fatal("Failed to start server", zap.Error(err))
 	}

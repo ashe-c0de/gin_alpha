@@ -10,6 +10,7 @@ import (
 
 // UserHandler 处理 /user/:id 请求
 func UserHandler(c *gin.Context) {
+	log.Logger.Info("account handler called")
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
