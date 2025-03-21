@@ -42,7 +42,7 @@ func main() {
 
 	// DI account handler
 	accountRepo := &repo.AccountRepo{DB: db}
-	accountService := &service.AccountService{Repo: accountRepo}
+	accountService := &service.AccountService{Repo: accountRepo, DB: db}
 	accountHandler := &handlers.AccountHandler{Service: accountService}
 
 	// DI hello handler

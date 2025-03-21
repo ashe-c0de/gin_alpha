@@ -19,17 +19,20 @@ func (r *AccountRepo) GetAccountByID(id uint) (*models.Account, error) {
 	return &account, nil
 }
 
-func (r *AccountRepo) CreateAccount(account *models.Account) error {
-	return r.DB.Create(account).Error
+// CreateAccountTx 使用事务创建账户
+func (r *AccountRepo) CreateAccountTx(tx *gorm.DB, account *models.Account) error {
+	return tx.Create(account).Error
 }
 
-func (r *AccountRepo) EditAccount(account *models.Account) error {
+// EditAccountTx 使用事务更新账户
+func (r *AccountRepo) EditAccountTx(tx *gorm.DB, account *models.Account) error {
 	//sql := "UPDATE accounts SET account_holder_name = ?, balance = ? WHERE account_id = ?"
-	//return r.DB.Exec(sql, account.AccountHolderName, account.Balance, account.AccountID).Error
-	return r.DB.Save(account).Error
+	//return tx.Exec(sql, account.AccountHolderName, account.Balance, account.AccountID).Error
+	return tx.Save(account).Error
 }
 
-func (r *AccountRepo) DelAccount(id uint) error {
-	// return r.DB.Where("account_number = ?", accountNumber).Delete(&models.Account{}).Error
-	return r.DB.Delete(&models.Account{}, id).Error
+// DelAccountTx 使用事务删除账户
+func (r *AccountRepo) DelAccountTx(tx *gorm.DB, id uint) error {
+	//return tx.Where("account_number = ?", id).Delete(&models.Account{}).Error
+	return tx.Delete(&models.Account{}, id).Error
 }
