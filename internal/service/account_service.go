@@ -36,6 +36,8 @@ func (s *AccountService) CreateAccount(account *models.Account) error {
 
 // EditAccount 在事务中更新账户
 func (s *AccountService) EditAccount(account *models.Account) error {
+	// 在 AccountService 里，虽然已经有 *gorm.DB，但实际的数据库操作仍然由 Repo 负责
+	// 目的是：Service 控制事务，Repo 负责数据库操作。并且 Repo 层可以在事务 或 非事务环境下复用。
 	return s.DB.Transaction(func(tx *gorm.DB) error {
 		// 使用事务对象 tx 代替 r.DB
 		if err := s.Repo.EditAccountTx(tx, account); err != nil {
