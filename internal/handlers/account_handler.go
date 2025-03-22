@@ -52,7 +52,7 @@ func (h *AccountHandler) CreatAccount(c *gin.Context) {
 	// 新增Account
 	err := h.Service.CreateAccount(&account)
 	if err != nil {
-		log.Logger.Error("创建account失败", err)
+		log.Logger.Error("创建account失败", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	} else {
@@ -83,7 +83,7 @@ func (h *AccountHandler) EditAccount(c *gin.Context) {
 	// 新增Account
 	err := h.Service.EditAccount(account)
 	if err != nil {
-		log.Logger.Error("修改account失败", err)
+		log.Logger.Error("修改account失败", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	} else {
@@ -103,7 +103,7 @@ func (h *AccountHandler) DelAccount(c *gin.Context) {
 	}
 	err := h.Service.DelAccount(dto.AccountID)
 	if err != nil {
-		log.Logger.Error("删除account失败", err)
+		log.Logger.Error("删除account失败", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	} else {

@@ -12,9 +12,11 @@ import (
 	"my_destributed_project/internal/service"
 	"my_destributed_project/pkg/database"
 	"my_destributed_project/pkg/log"
+	"my_destributed_project/pkg/utils"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 )
@@ -54,7 +56,7 @@ func main() {
 	port := configs.AppConfig.Server.Port
 
 	server := &http.Server{
-		Addr:    ":" + port,
+		Addr:    ":" + strconv.Itoa(port),
 		Handler: routers,
 	}
 
@@ -66,12 +68,15 @@ func main() {
 	ctx, srvCancel := context.WithCancel(context.Background())
 
 	go func() {
-		log.Logger.Info("Server is starting: ", port)
+		log.Logger.Info("Server is starting", zap.Int("port", port))
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Logger.Error("Server startup failed", zap.Error(err))
 			srvCancel() // 触发 `context` 取消，确保 `server.Shutdown(ctx)` 被调用
 		}
 	}()
+
+	// 启动Kafka消费者
+	go utils.StartConsumer(ctx, utils.GroupID)
 
 	// 等待退出信号
 	<-quit

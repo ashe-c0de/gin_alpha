@@ -18,9 +18,11 @@ type Database struct {
 
 // ServerConfig 服务器相关配置
 type ServerConfig struct {
-	Port    string `mapstructure:"port"`
-	LogPath string `mapstructure:"log_path"`
-	LogName string `mapstructure:"log_name"`
+	Port      int    `mapstructure:"port"`
+	LogPath   string `mapstructure:"log_path"`
+	LogName   string `mapstructure:"log_name"`
+	KafkaHost string `mapstructure:"kafka_host"`
+	KafkaPort string `mapstructure:"kafka_port"`
 }
 
 // Config 总体配置

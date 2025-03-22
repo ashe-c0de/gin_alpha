@@ -13,6 +13,7 @@ func SetRouters(helloHandler *handlers.HelloHandler, accountHandler *handlers.Ac
 
 	// 注册路由
 	routers.GET("/hello", helloHandler.HelloHandler)
+	routers.POST("/mq", helloHandler.TestMq)
 
 	routers.GET("/acc/:id", accountHandler.GetAccount)
 	routers.POST("/acc/add", accountHandler.CreatAccount)

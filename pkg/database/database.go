@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"my_destributed_project/configs"
@@ -17,7 +18,7 @@ func ConnectDatabase() *gorm.DB {
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Logger.Error("Failed to connect to database:", err)
+		log.Logger.Error("Failed to connect to database: ", zap.Error(err))
 	}
 	return db
 }
