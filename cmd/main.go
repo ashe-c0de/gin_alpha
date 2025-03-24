@@ -72,7 +72,7 @@ func main() {
 
 	// 注册服务
 	etcd.Init()
-	etcd.RegisterService("/services/my-app/instance-1", "http://139.196.243.6:8000", 10)
+	etcd.RegisterService(utils.OrderService, utils.OrderInstance, 10)
 
 	// 启动 HTTP 服务器
 	go func() {
