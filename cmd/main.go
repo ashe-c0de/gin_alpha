@@ -7,6 +7,7 @@ import (
 	"golang.org/x/net/context"
 	"my_destributed_project/api"
 	"my_destributed_project/configs"
+	"my_destributed_project/internal/etcd"
 	"my_destributed_project/internal/handlers"
 	"my_destributed_project/internal/repo"
 	"my_destributed_project/internal/service"
@@ -22,6 +23,7 @@ import (
 )
 
 func main() {
+
 	fmt.Println("start")
 
 	// 加载配置
@@ -55,6 +57,7 @@ func main() {
 
 	port := configs.AppConfig.Server.Port
 
+	// 创建 HTTP 服务器
 	server := &http.Server{
 		Addr:    ":" + strconv.Itoa(port),
 		Handler: routers,
@@ -64,9 +67,14 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
-	// 启动 HTTP 服务器
+	// 创建一个 ctx，用于控制 HTTP 服务器的生命周期
 	ctx, srvCancel := context.WithCancel(context.Background())
 
+	// 注册服务
+	etcd.Init()
+	etcd.RegisterService("/services/my-app/instance-1", "http://139.196.243.6:8000", 10)
+
+	// 启动 HTTP 服务器
 	go func() {
 		log.Logger.Info("Server is starting", zap.Int("port", port))
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {

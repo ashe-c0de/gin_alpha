@@ -23,6 +23,7 @@ type ServerConfig struct {
 	LogName   string `mapstructure:"log_name"`
 	KafkaHost string `mapstructure:"kafka_host"`
 	KafkaPort string `mapstructure:"kafka_port"`
+	EtcdPort  int    `mapstructure:"etcd_port"`
 }
 
 // Config 总体配置
