@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"my_destributed_project/internal/handlers"
 )
@@ -10,6 +11,14 @@ func SetRouters(helloHandler *handlers.HelloHandler, accountHandler *handlers.Ac
 	gin.SetMode(gin.ReleaseMode)
 	// 初始化 Gin 路由
 	routers := gin.New()
+
+	// 跨域配置
+	routers.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		AllowCredentials: true,
+	}))
 
 	// 注册路由
 	routers.GET("/hello", helloHandler.HelloHandler)

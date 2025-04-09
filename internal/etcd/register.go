@@ -35,7 +35,7 @@ func RegisterService(serviceKey, serviceValue string, ttl int64) {
 		log.Logger.Error("保持租约失败: ", zap.Error(err))
 		return
 	}
-	log.Logger.Info("4")
+
 	// 监听 keepAlive 响应（防止 `nil` panic）
 	go func() {
 		for ka := range keepAliveCh {

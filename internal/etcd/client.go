@@ -20,7 +20,7 @@ func Init() *clientv3.Client {
 	once.Do(func() {
 		// 在 Docker 内部，容器可以使用其他容器的名称（即服务名）来进行通信，而无需使用 IP 地址
 		etcdPort := strconv.Itoa(configs.AppConfig.Server.EtcdPort)
-		endpoints := []string{"http://etcd" + ":" + etcdPort}
+		endpoints := []string{"http://" + configs.AppConfig.Server.KafkaHost + ":" + etcdPort}
 
 		var err error
 		cli, err = clientv3.New(clientv3.Config{
